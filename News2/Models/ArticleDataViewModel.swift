@@ -14,9 +14,9 @@ class ArticleDataViewModel : ObservableObject {
     init(provider: CoreDataManager, article: ArticleDataBase? = nil){
         self.context = provider.mainMOC
         self.article = ArticleDataBase(context: self.context)
-        provider.loadStores()
+        
     }
-    
+     
     func saveContext()  {
         if context.hasChanges {
             do {

@@ -14,6 +14,11 @@ class NewsViewModel: ObservableObject {
     @Published var bookmarks: [Articles] = []
     
     
+    //@StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
+    //@FetchRequest(fetchRequest: ArticleDataBase.all()) private var fetchedItems: FetchedResults<ArticleDataBase>
+    var provider = CoreDataManager.shared
+    
+    
     var allArticles = [Articles]()
     @Published var searchArticles: [Articles] = []
     //var allArticles = [Articles]()
@@ -127,6 +132,7 @@ class NewsViewModel: ObservableObject {
             removeBookmark(article: article)
         } else {
             addBookmark(article: article)
+            provider.loadStores()
         }
     }
     
