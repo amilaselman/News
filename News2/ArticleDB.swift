@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ArticleDataBase: NSManagedObject, Identifiable {
+class ArticleDB: NSManagedObject, Identifiable {
 
         @NSManaged public var id: UUID
         @NSManaged public var authorDB: String?
@@ -27,15 +27,15 @@ class ArticleDataBase: NSManagedObject, Identifiable {
 
 }
 
-extension ArticleDataBase {
-    private static var articleFetchRequest: NSFetchRequest<ArticleDataBase> {
+extension ArticleDB {
+    private static var articleFetchRequest: NSFetchRequest<ArticleDB> {
         NSFetchRequest(entityName: "ArticleDB")
     }
 
-    static func all() -> NSFetchRequest<ArticleDataBase> {
-        let request: NSFetchRequest<ArticleDataBase> = articleFetchRequest
+    static func all() -> NSFetchRequest<ArticleDB> {
+        let request: NSFetchRequest<ArticleDB> = articleFetchRequest
         request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \ArticleDataBase.publishedAtDB, ascending: true)
+            NSSortDescriptor(keyPath: \ArticleDB.publishedAtDB, ascending: true)
         ]
         return request
     }

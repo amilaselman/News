@@ -18,8 +18,8 @@ struct HomePageView: View {
 //    @Environment (\.dismiss) private var dismiss
 //    @ObservedObject var vm: ArticleDataViewModel
     
-//    var provider = CoreDataManager.shared
-   @FetchRequest(fetchRequest: ArticleDataBase.all()) private var fetchedItems: FetchedResults<ArticleDataBase>
+    var provider = CoreDataManager.shared
+   @FetchRequest(fetchRequest: ArticleDB.all()) private var fetchedItems: FetchedResults<ArticleDB>
     @StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
     //model
     @StateObject var viewModel = NewsViewModel()
@@ -127,24 +127,24 @@ struct HomePageView: View {
 //            }
         
     }
-//    func addItem(){
-//        
-//        let newArticle = ArticleDataBase(context: provider.newContext)
-//       newArticle.id = UUID()
-//        newArticle.authorDB = article.author
-//        newArticle.titleDB = article.title
-//        newArticle.idSourceDB = article.source.id
-//        newArticle.nameSourceDB = article.source.name
-//        newArticle.descriptionDB = article.description
-//        newArticle.contentDB = article.content
-//        newArticle.publishedAtDB = article.publishedAt
-//        newArticle.urlDB = try? String(contentsOf: article.url)
-//        newArticle.urlToImageDB = try? String(contentsOf: article.urlToImage!)
-//       
-//       
-//        vm.saveContext()
-//        
-//   }
+    func addItem(){
+        
+        let newArticle = ArticleDB(context: provider.mainMOC)
+       newArticle.id = UUID()
+        newArticle.authorDB = article.author
+        newArticle.titleDB = article.title
+        newArticle.idSourceDB = article.source.id
+        newArticle.nameSourceDB = article.source.name
+        newArticle.descriptionDB = article.description
+        newArticle.contentDB = article.content
+        newArticle.publishedAtDB = article.publishedAt
+        newArticle.urlDB = try? String(contentsOf: article.url)
+        newArticle.urlToImageDB = try? String(contentsOf: article.urlToImage!)
+       
+        provider.loadStores()
+        vm.saveContext()
+        
+   }
 //   func removeItem(at offsets: IndexSet) {
 //
 //   }

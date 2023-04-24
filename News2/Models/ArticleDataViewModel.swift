@@ -9,11 +9,11 @@ import Foundation
 import CoreData
 
 class ArticleDataViewModel : ObservableObject {
-    @Published var article: ArticleDataBase
+    @Published var article: ArticleDB
     let context: NSManagedObjectContext
-    init(provider: CoreDataManager, article: ArticleDataBase? = nil){
+    init(provider: CoreDataManager, article: ArticleDB? = nil){
         self.context = provider.mainMOC
-        self.article = ArticleDataBase(context: self.context)
+        self.article = ArticleDB(context: self.context)
         
     }
      

@@ -132,7 +132,7 @@ class NewsViewModel: ObservableObject {
             removeBookmark(article: article)
         } else {
             addBookmark(article: article)
-            provider.loadStores()
+            //provider.loadStores()
         }
     }
     
