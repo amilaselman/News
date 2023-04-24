@@ -10,7 +10,7 @@ import CoreData
 
 class ArticleDB: NSManagedObject, Identifiable {
 
-        @NSManaged public var id: UUID
+        //@NSManaged public var id: UUID
         @NSManaged public var authorDB: String?
         @NSManaged public var titleDB: String?
         @NSManaged public var idSourceDB: String?
@@ -20,7 +20,14 @@ class ArticleDB: NSManagedObject, Identifiable {
         @NSManaged public var publishedAtDB: String?
         @NSManaged public var urlDB: String?
         @NSManaged public var urlToImageDB: String?
-
+    var url: URL? {
+        guard let url = urlDB else { return nil }
+         return URL(string: url)
+    }
+    
+    var urlToImage: URL? {
+        URL(string: urlToImageDB ?? String())
+    }
     override func awakeFromInsert() {
         super.awakeFromInsert()
     }

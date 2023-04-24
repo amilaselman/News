@@ -7,40 +7,59 @@
 
 import Foundation
 import CoreData
-//https://newsapi.org/v2/everything?q=apple&apiKey=API
-//set enum cases for q
-// api key 
+ 
 class AllHeadlinesManager{
-//     NSObject, ObservableObject
-//        @Published var articleData: ArticleDataBase = ArticleDataBase()
-//        let container: NSPersistentContainer = NSPersistentContainer(name: "ArticleDataModel")
-//    override init() {
-//        super.init()
-//        container.loadPersistentStores { storeDescription, error in
-//            if let error = error as NSError? {
-//                fatalError("Container load failed: \(error)")
-//            }
-//        }
-//    }
-//
-   
-    
-    func getData(completionHandler: @escaping (News) -> ()) {
+    private let coreManager = CoreDataManager.shared
+
+    func getData(completionHandler: @escaping (Bool) -> ()) {
         let urlString = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=9044fe8605c447b587a2adc404452dd5"
         guard let url = URL(string: urlString) else { return} // check za kasnije
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let recievedData = data {
                 do {
-                     let decodedData = try JSONDecoder().decode(News.self, from: recievedData)
+                     let items = try JSONDecoder().decode(News.self, from: recievedData)
+                    for item in items.articles {
+                        self.addItem(article: item)
+                    }
                     DispatchQueue.main.async {
-                       completionHandler(decodedData)
+                       completionHandler(true)
                     }
                 } catch {
-                    print(error)
+                    completionHandler(false)
                 }
             }
                     
         }.resume()
+    }
+   
+    func addItem(article: Article) {
+        let context = coreManager.writeMOC
+        let newArticle = ArticleDB(context: context)
+        context.perform {
+           // newArticle.id = UUID()
+            newArticle.authorDB = article.author
+            newArticle.titleDB = article.title
+            newArticle.idSourceDB = article.source.id
+            newArticle.nameSourceDB = article.source.name
+            newArticle.descriptionDB = article.description
+            newArticle.contentDB = article.content
+            newArticle.publishedAtDB = article.publishedAt
+            newArticle.urlDB = article.url.absoluteString
+            newArticle.urlToImageDB = article.urlToImage?.absoluteString
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error {
+                    print("Unable to save context: \(error)")
+                }
+            }
+        }
+    }
+    
+    func fetchAllHeadlines() -> [ArticleDB] {
+        let context = coreManager.mainMOC
+        let request = ArticleDB.all()
+        return (try? context.fetch(request)) ?? []
     }
 }
 

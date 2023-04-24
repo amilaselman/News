@@ -8,22 +8,22 @@
 import Foundation
 import CoreData
 
-class ArticleDataViewModel : ObservableObject {
-    @Published var article: ArticleDB
-    let context: NSManagedObjectContext
-    init(provider: CoreDataManager, article: ArticleDB? = nil){
-        self.context = provider.mainMOC
-        self.article = ArticleDB(context: self.context)
-        
-    }
-     
-    func saveContext()  {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error  {
-                fatalError("Error saving context :\(error)")
-            }
-        }
-    }
-}
+//class ArticleDataViewModel : ObservableObject {
+//    @Published var article: ArticleDB
+//    let context: NSManagedObjectContext
+//    init(provider: CoreDataManager, article: ArticleDB? = nil){
+//        self.context = provider.mainMOC
+//        self.article = ArticleDB(context: self.context)
+//        
+//    }
+//     
+//    func saveContext()  {
+//        if context.hasChanges {
+//            do {
+//                try context.save()
+//            } catch let error  {
+//                fatalError("Error saving context :\(error)")
+//            }
+//        }
+//    }
+//}

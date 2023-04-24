@@ -11,7 +11,7 @@ struct News: Codable, Hashable {
     
     var status: String
     var totalResults: Int
-    var articles: [Articles]
+    var articles: [Article]
 }
 
 struct Source: Codable, Hashable, Identifiable {
@@ -19,7 +19,7 @@ struct Source: Codable, Hashable, Identifiable {
     var name: String
 }
 
-struct Articles: Codable, Hashable {
+struct Article: Codable, Hashable {
    // let id: UUID//
     var source: Source
     var author: String?

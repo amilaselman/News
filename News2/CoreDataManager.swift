@@ -10,7 +10,7 @@ import CoreData
 
 
 
- class CoreDataManager: NSObject {
+final class CoreDataManager: NSObject {
     private let modelFileName = "ArticlesDataModel"
     private let modelFileExtension = "momd"
     private let dbFilename = "ArticlesDataModel.sqlite"
