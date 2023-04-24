@@ -9,9 +9,9 @@ import SwiftUI
 
 struct BookmarksView: View {
     
-    var provider = CoreDataManager.shared
-    @FetchRequest(fetchRequest: ArticleDB.all()) private var fetchedItems: FetchedResults<ArticleDB>
-    @StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
+   // var provider = CoreDataManager.shared
+    //@FetchRequest(fetchRequest: ArticleDB.all()) private var fetchedItems: FetchedResults<ArticleDB>
+    //@StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
     
     @StateObject var viewModel = NewsViewModel()
     @State var article: Articles

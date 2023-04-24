@@ -11,9 +11,9 @@ import CoreData
 
 
 final class CoreDataManager: NSObject {
-    private let modelFileName = "ArticleDB"
+    private let modelFileName = "ArticlesDataModel"
     private let modelFileExtension = "momd"
-    private let dbFilename = "ArticleDB.sqlite"
+    private let dbFilename = "ArticlesDataModel.sqlite"
     static let shared = CoreDataManager()
     
     private var storeIsNotLoad = true

@@ -10,17 +10,21 @@ import CoreData
 
 struct HomePageView: View {
     //dataBase model
-//    @StateObject var articleManager = AllHeadlinesManager()
-//    @StateObject var articleBase = ArticleDataBase()
-//    @Environment(\.managedObjectContext) private var viewContext
-//    @FetchRequest(entity: ArticleDataBase.entity(), sortDescriptors: []) var fetchedResult: FetchedResults<ArticleDataBase>
+    //    @Environment(\.managedObjectContext) private var viewContext
+    //    @FetchRequest(entity: ArticleDataBase.entity(), sortDescriptors: []) var fetchedResult: FetchedResults<ArticleDataBase>
     
-//    @Environment (\.dismiss) private var dismiss
-//    @ObservedObject var vm: ArticleDataViewModel
+    //    @Environment (\.dismiss) private var dismiss
+    //    @ObservedObject var vm: ArticleDataViewModel
     
-    var provider = CoreDataManager.shared
-   @FetchRequest(fetchRequest: ArticleDB.all()) private var fetchedItems: FetchedResults<ArticleDB>
-    @StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
+    //    var provider = CoreDataManager.shared
+    //   @FetchRequest(fetchRequest: ArticleDB.all()) private var fetchedItems: FetchedResults<ArticleDB>
+    //    @StateObject var vm = ArticleDataViewModel(provider: CoreDataManager.shared)
+    //
+       @Environment(\.managedObjectContext) var moc
+        @FetchRequest(entity: ArticleDB.entity(), sortDescriptors: []) var fetchedItems: FetchedResults<ArticleDB>
+    
+    @State var coreManager = CoreDataManager()
+    
     //model
     @StateObject var viewModel = NewsViewModel()
     @State var article : Articles
@@ -29,74 +33,55 @@ struct HomePageView: View {
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
-       
         NavigationStack {
-            //ScrollView{
-                VStack(alignment: .leading){
-                    Text("Discover things of this world")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Text("Top Headlines")
-                        .font(.largeTitle)
-                        .bold()
-                    Spacer()
-                       ImageListView
-                    Text("All Articles")
-                        .font(.largeTitle)
-                        .bold()
-                    AllArticlesView
-                }.navigationTitle("Browse")//.navigationBarTitleDisplayMode(.inline)
-                    .padding(.all)
-                    .background(
+            VStack(alignment: .leading){
+                Text("Discover things of this world")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                Spacer()
+                Text("Top Headlines")
+                    .font(.largeTitle)
+                    .bold()
+                Spacer()
+                TopHeadlinesView
+                Text("All Articles")
+                    .font(.largeTitle)
+                    .bold()
+                AllArticlesView
+            }.navigationTitle("Browse")//.navigationBarTitleDisplayMode(.inline)
+                .padding(.all)
+                .background(
                     NavigationLink("", destination: BookmarksView(article: article), isActive: $viewActive))
-                    .toolbar {
-                        ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
-                            Button {
-                                //what does it do?
-                            } label: {
-                                Image(systemName: "house.fill")
-                                    .foregroundColor(Color(backgroundColor))
-                            }
-                            Spacer()
-                            Image(systemName: "square.split.2x2")
-                                .foregroundColor(.gray)
-                            Spacer()
-                            Button {
-                                viewActive = true
-                            } label: {
-                                Image(systemName: "bookmark")
-                                    .foregroundColor(.gray)
-                            }
-                            Spacer()
-                            Image(systemName: "person")
+                .toolbar {
+                    ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
+                        Button {
+                            //what does it do?
+                        } label: {
+                            Image(systemName: "house.fill")
+                                .foregroundColor(Color(backgroundColor))
+                        }
+                        Spacer()
+                        Image(systemName: "square.split.2x2")
+                            .foregroundColor(.gray)
+                        Spacer()
+                        Button {
+                            viewActive = true
+                        } label: {
+                            Image(systemName: "bookmark")
                                 .foregroundColor(.gray)
                         }
+                        Spacer()
+                        Image(systemName: "person")
+                            .foregroundColor(.gray)
                     }
-            //}
-            
+                }
         }.searchable(text: $searchText)
             .onChange(of: searchText) { articleTitle in
                 viewModel.search(text: articleTitle)
             }
-        
-            
     }
     
-    var AllArticlesView : some View {
-        List(viewModel.searchArticles, id: \.publishedAt) { item in
-           let cell = CellView(article: viewModel.getTitle(itemTitle: item.title))
-            let details = DetailsView(article: viewModel.getArticle(articlePublishedAt: item.publishedAt))
-            NavigationLink {
-                details
-            } label: {
-                cell
-            }
-        }
-    }
-    
-    var ImageListView: some View {
-        
+    var TopHeadlinesView: some View {
         ScrollView(.horizontal){
             HStack{
                 ForEach(viewModel.topArticles, id: \.publishedAt) { item in
@@ -110,46 +95,46 @@ struct HomePageView: View {
                 }
             }
         }
-                
-            
-            
-        
-
-//        List(viewModel.articles, id: \.publishedAt) { item in
-//            let articleURLtoImage = viewModel.getURLtoImage(itemURLtoImage: item.urlToImage)
-//            ImageView(articles: articleURLtoImage)
-//            let cell = CellView(article: viewModel.getTitle(itemTitle: item.title))
-//            let details = DetailsView(article: viewModel.getArticle(articlePublishedAt: item.publishedAt))
-//            NavigationLink {
-//                details
-//            } label: {
-//                cell
-//            }
-        
     }
-    func addItem(){
-        
-        let newArticle = ArticleDB(context: provider.mainMOC)
-       newArticle.id = UUID()
-        newArticle.authorDB = article.author
-        newArticle.titleDB = article.title
-        newArticle.idSourceDB = article.source.id
-        newArticle.nameSourceDB = article.source.name
-        newArticle.descriptionDB = article.description
-        newArticle.contentDB = article.content
-        newArticle.publishedAtDB = article.publishedAt
-        newArticle.urlDB = try? String(contentsOf: article.url)
-        newArticle.urlToImageDB = try? String(contentsOf: article.urlToImage!)
-       
-        provider.loadStores()
-        vm.saveContext()
-        
-   }
-//   func removeItem(at offsets: IndexSet) {
-//
-//   }
-//
+    
+    var AllArticlesView : some View {
+        List(viewModel.searchArticles, id: \.publishedAt) { item in
+            let cell = CellView(article: viewModel.getTitle(itemTitle: item.title))
+            let details = DetailsView(article: viewModel.getArticle(articlePublishedAt: item.publishedAt))
+            NavigationLink {
+                details
+            } label: {
+                cell
+            }
+        }
+    }
+    
    
+    
+    
+    //    func addItem(){
+    //
+    //        let newArticle = ArticleDB(context: provider.mainMOC)
+    //       newArticle.id = UUID()
+    //        newArticle.authorDB = article.author
+    //        newArticle.titleDB = article.title
+    //        newArticle.idSourceDB = article.source.id
+    //        newArticle.nameSourceDB = article.source.name
+    //        newArticle.descriptionDB = article.description
+    //        newArticle.contentDB = article.content
+    //        newArticle.publishedAtDB = article.publishedAt
+    //        newArticle.urlDB = try? String(contentsOf: article.url)
+    //        newArticle.urlToImageDB = try? String(contentsOf: article.urlToImage!)
+    //
+    //        provider.loadStores()
+    //        vm.saveContext()
+    //
+    //   }
+    //   func removeItem(at offsets: IndexSet) {
+    //
+    //   }
+    //
+    
 }
 
 struct HomePageView_Previews: PreviewProvider {

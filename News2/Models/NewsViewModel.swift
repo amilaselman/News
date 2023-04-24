@@ -48,7 +48,7 @@ class NewsViewModel: ObservableObject {
     func getTopHeadlines() {
         topHeadlinesManager.getData { news in
             self.topArticles = news.articles
-            //self.bookmarks = news.articles
+            self.bookmarks = news.articles
             self.savedArticles = news.articles
         }
     }
@@ -114,13 +114,13 @@ class NewsViewModel: ObservableObject {
     }
     
     func addBookmark(article: Articles) {
-//        if isBookmarkPressed(for: article) != nil {
-//            bookmarks.insert(article, at: 0)
-//        } else {
-//            return
-//        }
-        guard !isBookmarkPressed(article: article) else { return }
-        bookmarks.insert(article, at: 0)
+        if isBookmarkPressed(article: article) != nil {
+            bookmarks.insert(article, at: 0)
+        } else {
+            return
+        }
+//        guard !isBookmarkPressed(article: article) else { return }
+//        bookmarks.insert(article, at: 0)
     }
     func removeBookmark(article: Articles) {
         //obrnuto
