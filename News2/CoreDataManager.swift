@@ -10,7 +10,7 @@ import CoreData
 
 
 
-final class CoreDataManager: NSObject {
+ class CoreDataManager: NSObject {
     private let modelFileName = "ArticlesDataModel"
     private let modelFileExtension = "momd"
     private let dbFilename = "ArticlesDataModel.sqlite"
@@ -18,7 +18,7 @@ final class CoreDataManager: NSObject {
     
     private var storeIsNotLoad = true
     
-    private lazy var persistentContainer: NSPersistentContainer = {
+     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: modelFileName)
         return container
     }()

@@ -48,7 +48,7 @@ class NewsViewModel: ObservableObject {
     func getTopHeadlines() {
         topHeadlinesManager.getData { news in
             self.topArticles = news.articles
-            self.bookmarks = news.articles
+            self.bookmarks = self.allArticles
             self.savedArticles = news.articles
         }
     }
@@ -135,12 +135,6 @@ class NewsViewModel: ObservableObject {
             //provider.loadStores()
         }
     }
-    
-//    func showSavedBookmarks() -> Articles {
-//        for bookmark in bookmarks {
-//            
-//        }
-//    }
    
     func search(text: String)  {
         if text.isEmpty {

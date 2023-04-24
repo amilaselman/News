@@ -80,12 +80,10 @@ struct BookmarksView: View {
     
     var SavedBookmarksView: some View {
     
-        HStack {
-            List(viewModel.bookmarks, id: \.publishedAt) { item in
+        List {
+            ForEach(viewModel.bookmarks, id: \.publishedAt) { item in
                 CellView(article: viewModel.getBookmark(publishedAt: item.publishedAt))
-                
             }
-            
         }
     }
 }

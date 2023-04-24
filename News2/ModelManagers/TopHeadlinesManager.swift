@@ -9,6 +9,7 @@
 import Foundation
 
 class TopHeadlinesManager  {
+  
     //my function
     func getData(completionHandler: @escaping (News) -> ()) {
         let urlString = "https://newsapi.org/v2/top-headlines?country=us&apiKey=9044fe8605c447b587a2adc404452dd5#"
