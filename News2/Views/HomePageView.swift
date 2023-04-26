@@ -21,20 +21,22 @@ struct HomePageView: View {
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
         NavigationStack {
+            ScrollView{
             VStack(alignment: .leading){
-                Text("Discover things of this world")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-                Spacer()
-                Text("Top Headlines")
-                    .font(.largeTitle)
-                    .bold()
-                Spacer()
-                TopHeadlinesView
-                Text("All Articles")
-                    .font(.largeTitle)
-                    .bold()
-               AllArticlesView
+                    Text("Discover things of this world")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    Spacer()
+                    Text("Top Headlines")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
+                    TopHeadlinesView
+                    Text("All Articles")
+                        .font(.largeTitle)
+                        .bold()
+                   AllArticlesView
+                }
             }.navigationTitle("Browse")//.navigationBarTitleDisplayMode(.inline)
                 .padding(.all)
                 .toolbar {
@@ -50,7 +52,7 @@ struct HomePageView: View {
                             .foregroundColor(.gray)
                         Spacer()
                         Button {
-                            //BookmarksView()
+                            BookmarksView()
                         } label: {
                             Image(systemName: "bookmark")
                                 .foregroundColor(.gray)
@@ -81,9 +83,9 @@ struct HomePageView: View {
     }
     
     var AllArticlesView : some View {
-        List(viewModel.articles, id: \.self) { item in
-            let cell = CellView(article: item)
-            let details = DetailsView(article: item)
+        ForEach(viewModel.articles, id: \.self) { article in
+            let cell = CellView(article: article)
+            let details = DetailsView(article: article)
             NavigationLink {
                 details
             } label: {

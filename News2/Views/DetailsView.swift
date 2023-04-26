@@ -19,7 +19,7 @@ struct DetailsView: View {
                 .navigationTitle("")
                 .padding(.all, 10)
                 .background(
-                NavigationLink("", destination: BookmarksView(article: article), isActive: $viewActive))
+                NavigationLink("", destination: BookmarksView(), isActive: $viewActive))
                 .toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
                         ShareLink(item: article.urlDB ?? String()){

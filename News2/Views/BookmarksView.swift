@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookmarksView: View {
     //@StateObject var viewModel = NewsViewModel()
-    @State var article: ArticleDB
+    //@State var article: ArticleDB
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
@@ -22,12 +22,12 @@ struct BookmarksView: View {
                     Spacer()
                 }.padding(.leading)
                 Spacer()
-//                if viewModel.bookmarks == [] {
-                    NoSavedBookmarksView
-                        .padding(.maximum(100.0, 10.0))
-//                } else {
-//                   // SavedBookmarksView
-//                }
+                //                if viewModel.bookmarks == [] {
+                NoSavedBookmarksView
+                    .padding(.maximum(100.0, 10.0))
+                //                } else {
+                //                   // SavedBookmarksView
+                //                }
             }.navigationTitle("Bookmarks")
                 .background(
                     NavigationLink("", destination: HomePageView(), isActive: $viewActive)
@@ -72,15 +72,15 @@ struct BookmarksView: View {
         }
     }
     
-//    var SavedBookmarksView: some View {
-//
-//        List {
-//            ForEach(viewModel.bookmarks, id: \.publishedAt) { item in
-//                CellView(article: item)
-//            }
-//        }
-//    }
+    //    var SavedBookmarksView: some View {
+    //
+    //        List(article, id: \.self) { item in
+    //            CellView(article: item)
+    //
+    //            }
+    //        }
 }
+
 
 
 

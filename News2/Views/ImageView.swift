@@ -57,7 +57,7 @@ struct ImageView: View {
     }
     
     var checkBookmark: some View {
-        Image(systemName: "bookmark.fill")
+        Image(systemName: "bookmark")
             .foregroundColor( .white)
             .frame(width: 10.0, height: 80.0, alignment: .topTrailing)
             .bold()
