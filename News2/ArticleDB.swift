@@ -41,7 +41,7 @@ extension ArticleDB {
 
     static func all() -> NSFetchRequest<ArticleDB> {
         let request: NSFetchRequest<ArticleDB> = articleFetchRequest
-        request.sortDescriptors = [ NSSortDescriptor(keyPath: \ArticleDB.publishedAtDB, ascending: true) ]
+        request.sortDescriptors = []
         return request
     }
     

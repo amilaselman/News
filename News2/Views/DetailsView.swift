@@ -18,34 +18,26 @@ struct DetailsView: View {
             viewContent
                 .navigationTitle("")
                 .padding(.all, 10)
-                .background(
-                NavigationLink("", destination: BookmarksView(), isActive: $viewActive))
                 .toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
                         ShareLink(item: article.urlDB ?? String()){
                             Image(systemName: "arrowshape.turn.up.right")
-                                    .foregroundColor(.gray)
+                                .foregroundColor(.gray)
                         }
                         Button {
-                            //viewModel.saveArticleToBookmark(article: article)
-                        } label: {
-//                            Image(systemName: viewModel.isBookmarkPressed(article: article) ? "bookmark.fill" : "bookmark")
-//                                .foregroundColor(.gray)
-                        }
-                    }
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
-                        Button {
-                            viewActive = true
+                            
                         } label: {
                             Image(systemName: "bookmark")
-                                .foregroundColor(Color(backgroundColor))
+                             .foregroundColor(.gray)
                         }
-
-                   }
+                    }
+                    
                 }
         }
+    
     }
     var viewContent: some View {
+        ScrollView{
         VStack(alignment: .leading) {
             Image(systemName: "photo")
                 .data(url: article.urlToImage ?? URL(fileURLWithPath: ""))
@@ -72,18 +64,18 @@ struct DetailsView: View {
             Text("Results")
                 .font(.title3)
                 .fontWeight(.bold)
-            ScrollView {
-                if let url = article.url {
-                    Link(destination: url) {
-                        Text(article.contentDB ?? "")
-                            .foregroundColor(Color(fontColor))
-                            .font(.system(size: 20))
-                            .multilineTextAlignment(.leading)
-                    }
+            if let url = article.url {
+                Link(destination: url) {
+                    Text(article.contentDB ?? "")
+                        .foregroundColor(Color(fontColor))
+                        .font(.system(size: 20))
+                        .multilineTextAlignment(.leading)
                 }
-                
             }
+            
+            
         }
+    }
     }
 }
 

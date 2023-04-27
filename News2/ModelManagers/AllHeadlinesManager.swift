@@ -47,18 +47,32 @@ class AllHeadlinesManager{
         }
     }
     
+    
+    func findOrCreate(article: Article, context: NSManagedObjectContext) -> ArticleDB {
+        let dataBaseArticle = fetchAllHeadlines()
+        for item in dataBaseArticle {
+            if item.urlDB  == article.url.absoluteString {
+                return item
+            }
+        }
+        //ako ne postoji kreiraj novi
+            let newArticle = ArticleDB(context: context)
+          return newArticle
+    }
+   
     func addItem(article: Article, context: NSManagedObjectContext) {
-        let newArticle = ArticleDB(context: context)
-        // newArticle.id = UUID()
-        newArticle.authorDB = article.author
-        newArticle.titleDB = article.title
-        newArticle.idSourceDB = article.source.id
-        newArticle.nameSourceDB = article.source.name
-        newArticle.descriptionDB = article.description
-        newArticle.contentDB = article.content
-        newArticle.publishedAtDB = article.publishedAt
-        newArticle.urlDB = article.url.absoluteString
-        newArticle.urlToImageDB = article.urlToImage?.absoluteString
+        //check da li ima vec u bazi article sa istim url kao iz apija ???  da je ArticleDB.urlDB == Article.url
+        let item = findOrCreate(article: article, context: context)
+        item.authorDB = article.author
+        item.titleDB = article.title
+        item.idSourceDB = article.source.id
+        item.nameSourceDB = article.source.name
+        item.descriptionDB = article.description
+        item.contentDB = article.content
+        item.publishedAtDB = article.publishedAt
+        item.urlDB = article.url.absoluteString
+        item.urlToImageDB = article.urlToImage?.absoluteString
+      
     }
     
     func fetchAllHeadlines() -> [ArticleDB] {
@@ -72,7 +86,7 @@ class AllHeadlinesManager{
     }
     
     
-    
+
 }
 
 

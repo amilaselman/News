@@ -39,7 +39,10 @@ struct HomePageView: View {
                 }
             }.navigationTitle("Browse")//.navigationBarTitleDisplayMode(.inline)
                 .padding(.all)
+                .background(
+                    NavigationLink("", destination: BookmarksView(), isActive: $viewActive))
                 .toolbar {
+                    
                     ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
                         Button {
                             //what does it do?
@@ -52,7 +55,7 @@ struct HomePageView: View {
                             .foregroundColor(.gray)
                         Spacer()
                         Button {
-                            BookmarksView()
+                            viewActive = true
                         } label: {
                             Image(systemName: "bookmark")
                                 .foregroundColor(.gray)
@@ -64,7 +67,7 @@ struct HomePageView: View {
                 }
         }.searchable(text: $searchText)
             .onChange(of: searchText) { articleTitle in
-                //viewModel.search(text: articleTitle)
+                viewModel.search(text: articleTitle)
             }
     }
     
@@ -83,7 +86,7 @@ struct HomePageView: View {
     }
     
     var AllArticlesView : some View {
-        ForEach(viewModel.articles, id: \.self) { article in
+        ForEach(viewModel.searchArticles, id: \.self) { article in
             let cell = CellView(article: article)
             let details = DetailsView(article: article)
             NavigationLink {
