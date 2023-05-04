@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailsView: View {
-//    @StateObject var viewModel = NewsViewModel()
+    @StateObject var viewModel = NewsViewModel()
     @State var article : ArticleDB
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
@@ -25,9 +25,9 @@ struct DetailsView: View {
                                 .foregroundColor(.gray)
                         }
                         Button {
-                            
+                            // saveToFavorite() fja koja ce sacuvati na BookmarksView article
                         } label: {
-                            Image(systemName: "bookmark")
+                            Image(systemName: article.isFavorite ? "bookmark.fill" : "bookmark")
                              .foregroundColor(.gray)
                         }
                     }
@@ -77,6 +77,7 @@ struct DetailsView: View {
         }
     }
     }
+    
 }
 
 //struct DetailsView_Previews: PreviewProvider {

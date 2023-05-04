@@ -37,7 +37,7 @@ struct URLImageBookmarkView: View {
     }
 }
 struct ImageView: View {
-    //@StateObject var viewModel = NewsViewModel()
+    @StateObject var viewModel = NewsViewModel()
     @State var article: ArticleDB
     var bookmarkPressed: Bool = true
     var body: some View {
@@ -45,7 +45,7 @@ struct ImageView: View {
                 URLImageBookmarkView(urlString: article.urlToImage)
             VStack(alignment: .trailing){
                 Button {
-                    //viewModel.saveArticleToBookmark(article: article)
+                    //da li treba raditi saveToFavorite() ili samo prikaz da je sacuvan article
                 } label: {
                     checkBookmark
                 }
@@ -58,7 +58,7 @@ struct ImageView: View {
     }
     
     var checkBookmark: some View {
-        Image(systemName:  "bookmark")
+        Image(systemName: article.isFavorite ? "bookmark.fill" : "bookmark")
             .foregroundColor( .white)
             .frame(width: 10.0, height: 80.0, alignment: .topTrailing)
             .bold()

@@ -33,7 +33,7 @@ class AllHeadlinesManager{
         let context = self.coreManager.writeMOC
         context.perform {
             for item in articles {
-                self.addItem(article: item, context: context)
+                self.insertItem(article: item, context: context)
             }
             if context.hasChanges {
                 do {
@@ -43,26 +43,28 @@ class AllHeadlinesManager{
                     print("Unable to save context: \(error)")
                     completionHandler(false)
                 }
+                
+            } else {
+                completionHandler(true)
             }
         }
     }
     
     
-    func findOrCreate(article: Article, context: NSManagedObjectContext) -> ArticleDB {
-        let dataBaseArticle = fetchAllHeadlines()
-        for item in dataBaseArticle {
-            if item.urlDB  == article.url.absoluteString {
-                return item
-            }
-        }
-        //ako ne postoji kreiraj novi
+    func findOrCreate(url: String, context: NSManagedObjectContext) -> ArticleDB {
+        let article = fetchByUrl(by: url)// pozvati fju sa predicate za url
+        if let article = article { //unwrappanje
+            return article
+        } else {
             let newArticle = ArticleDB(context: context)
-          return newArticle
+            return newArticle
+        }
     }
-   
-    func addItem(article: Article, context: NSManagedObjectContext) {
+    
+    func insertItem(article: Article, context: NSManagedObjectContext) {
         //check da li ima vec u bazi article sa istim url kao iz apija ???  da je ArticleDB.urlDB == Article.url
-        let item = findOrCreate(article: article, context: context)
+        let item = findOrCreate(url: article.url.absoluteString, context: context)
+        //ako ga nadje, treba ga update-ovat
         item.authorDB = article.author
         item.titleDB = article.title
         item.idSourceDB = article.source.id
@@ -72,21 +74,33 @@ class AllHeadlinesManager{
         item.publishedAtDB = article.publishedAt
         item.urlDB = article.url.absoluteString
         item.urlToImageDB = article.urlToImage?.absoluteString
-      
+        
     }
     
+    //fetch sve
     func fetchAllHeadlines() -> [ArticleDB] {
         let context = coreManager.mainMOC
-        let request = ArticleDB.all()
+        let request = ArticleDB.articleFetchRequest
         return (try? context.fetch(request)) ?? []
     }
     
-    func predicateUrl(for url: String) -> NSPredicate {
-        NSPredicate(format: "@K == %@", #keyPath(ArticleDB.urlDB), url )
+    func fetchByUrl(by url: String) -> ArticleDB? {
+        let context = coreManager.mainMOC
+        let request = ArticleDB.articleFetchRequest
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(ArticleDB.urlDB), url)
+        return try? context.fetch(request).first
     }
     
+    func fetchFavorites() -> [ArticleDB] {
+        let context = coreManager.mainMOC
+        let request = ArticleDB.articleFetchRequest
+        request.predicate = NSPredicate(format: "%K == true", #keyPath(ArticleDB.isFavorite))
+        return (try? context.fetch(request)) ?? []
+    }
     
-
+//    func predicateIsFavorite() -> NSPredicate {
+//        NSPredicate(format: "@K == %@", #keyPath(ArticleDB.isFavorite))// kako oznacimo da je favorite true
+//    }
 }
 
 

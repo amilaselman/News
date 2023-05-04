@@ -11,6 +11,7 @@ import CoreData
 class ArticleDB: NSManagedObject, Identifiable {
 
         //@NSManaged public var id: UUID
+        @NSManaged public var isFavorite: Bool
         @NSManaged public var authorDB: String?
         @NSManaged public var titleDB: String?
         @NSManaged public var idSourceDB: String?
@@ -35,14 +36,9 @@ class ArticleDB: NSManagedObject, Identifiable {
 }
 
 extension ArticleDB {
-    private static var articleFetchRequest: NSFetchRequest<ArticleDB> {
+    static var articleFetchRequest: NSFetchRequest<ArticleDB> {
         NSFetchRequest(entityName: "ArticleDB")
-    }
-
-    static func all() -> NSFetchRequest<ArticleDB> {
-        let request: NSFetchRequest<ArticleDB> = articleFetchRequest
-        request.sortDescriptors = []
-        return request
+        
     }
     
     

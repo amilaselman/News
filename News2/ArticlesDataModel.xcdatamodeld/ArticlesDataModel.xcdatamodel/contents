@@ -6,6 +6,7 @@
         <attribute name="descriptionDB" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="idSourceDB" optional="YES" attributeType="String"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="nameSourceDB" optional="YES" attributeType="String"/>
         <attribute name="publishedAtDB" optional="YES" attributeType="String"/>
         <attribute name="titleDB" optional="YES" attributeType="String"/>
