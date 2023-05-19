@@ -8,31 +8,35 @@
 import Foundation
 import SwiftUI
  class NewsViewModel: ObservableObject {
+     //managed variables for storing data, searching data
     @Published var articles: [ArticleDB] = []
     @Published var topArticles: [ArticleDB] = []
-    //@Published var savedArticles = [ArticleDB]()
     @Published var bookmarks: [ArticleDB] = []
+    @Published var bookmark = ArticleDB()
     var allArticles = [ArticleDB]()
     @Published var searchArticles: [ArticleDB] = []
-    
+     //references
     var provider = CoreDataManager.shared
     var allHeadlinesManager : AllHeadlinesManager
     var topHeadlinesManager : TopHeadlinesManager
     
-    init( topHeadlinesManager: TopHeadlinesManager = TopHeadlinesManager(), allHeadlinesManager: AllHeadlinesManager = AllHeadlinesManager()) {
+    
+     init( topHeadlinesManager: TopHeadlinesManager = TopHeadlinesManager(), allHeadlinesManager: AllHeadlinesManager = AllHeadlinesManager()) {
         self.topHeadlinesManager = topHeadlinesManager
         self.allHeadlinesManager = allHeadlinesManager
-        getTopHeadlines()
+
+         //isuess when pulling data from network for the first time, pulls at the same time? too fast so it chrashes
+        //getTopHeadlines()
         getAllHeadlines()
+         //getAllHeadlinesTest()
+         
     }
     
-     
      func getTopHeadlines() {
          topHeadlinesManager.getData { [weak self] success in
              guard let self else { return }
              DispatchQueue.main.async {
                  self.topArticles = self.topHeadlinesManager.fetchHeadlines()
-                 //self.bookmarks = self.topHeadlinesManager.fetchHeadlines()
              }
          }
      }
@@ -41,42 +45,40 @@ import SwiftUI
         allHeadlinesManager.getData { [weak self] success in
             guard let self else {return}
             DispatchQueue.main.async {
-                self.searchArticles = self.allHeadlinesManager.fetchAllHeadlines()
                 self.articles = self.allHeadlinesManager.fetchAllHeadlines()
-                self.allArticles = self.allHeadlinesManager.fetchAllHeadlines()
+                self.searchArticles = self.articles
+                self.allArticles = self.articles
             }
         }
     }
-     
+
      func getArticle(by url: String) -> ArticleDB? {
          topArticles.first(where:  { $0.urlDB == url })
      }
-
-     func getAllFeaturedFavorites () -> [ArticleDB] {
-         return allHeadlinesManager.fetchFavorites()
-      
+//to make a list of bookmarks in the BookmarksView
+     func getAllFeaturedFavorites() -> [ArticleDB] {
+         return allHeadlinesManager.fetchFavorites(context: provider.writeMOC)
      }
 
-    func addBookmark(article: ArticleDB) {
-        bookmarks.insert(article, at: 0)
-    }
-
+    
+//called in BookmarksView
+     func bookmarkArticle(article: ArticleDB) {
+         bookmark = allHeadlinesManager.addBookmark(article: article, context: provider.writeMOC)
+         bookmarks.append(bookmark)
+     }
+//called in ImageView
+//     func bookmarkTopArticle() {
+//         bookmark = topHeadlinesManager.findAndUpdate() ?? ArticleDB()
+//     }
+   
+//functionality works fine, no issues
     func search(text: String)  {
         if text.isEmpty {
             searchArticles = allArticles
         } else {
-            searchArticles = articles.filter({$0.titleDB!.contains(text)})
+            searchArticles = articles.filter({$0.titleDB?.contains(text) ?? true})
         }
     }
 }//end of viewModel
 
-extension Image {
-    func data(url: URL) -> Self {
-        if let data = try? Data(contentsOf: url) {
-           return Image(uiImage: UIImage(data: data)!)
-                .resizable()
-        }
-        return self
-            .resizable()
-    }
-}
+

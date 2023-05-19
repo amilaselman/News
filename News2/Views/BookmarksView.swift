@@ -8,55 +8,30 @@
 import SwiftUI
 
 struct BookmarksView: View {
-    //@StateObject var viewModel = NewsViewModel()
-    //@State var article: ArticleDB
+    @StateObject var viewModel = NewsViewModel()
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    Text("Saved articles to the library")
-                        .foregroundColor(.gray)
-                        .font(.subheadline)
+            ScrollView{
+                VStack {
+                    HStack {
+                        Text("Saved articles to the library")
+                            .foregroundColor(.gray)
+                            .font(.subheadline)
+                        Spacer()
+                    }.padding(.leading)
                     Spacer()
-                }.padding(.leading)
-                Spacer()
-                //                if viewModel.bookmarks == [] {
-                NoSavedBookmarksView
-                    .padding(.maximum(100.0, 10.0))
-                //                } else {
-                //                   // SavedBookmarksView
-                //                }
-            }.navigationTitle("Bookmarks")
-                .background(
-                    NavigationLink("", destination: HomePageView(), isActive: $viewActive)
-                )
-                .toolbar {
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
-                        Button {
-                            viewActive = true
-                        } label: {
-                            Image(systemName: "house")
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Image(systemName: "square.split.2x2")
-                            .foregroundColor(.gray)
-                        Spacer()
-                        Button {
-                            //goToBookmarks()
-                        } label: {
-                            Image(systemName: "bookmark.fill")
-                                .foregroundColor(Color(backgroundColor))
-                        }
-                        Spacer()
-                        Image(systemName: "person")
-                            .foregroundColor(.gray)
+                    if viewModel.bookmarks == [] {
+                        NoSavedBookmarksView
+                            .padding(.maximum(100.0, 10.0))
+                    } else {
+                        SavedBookmarksView
                     }
-                }
-        }
-    }
+                }.navigationTitle("Bookmarks")
+            }
+        }// end of navView
+    }//end of body var
     
     var NoSavedBookmarksView : some View {
         VStack{
@@ -72,14 +47,20 @@ struct BookmarksView: View {
         }
     }
     
-    //    var SavedBookmarksView: some View {
-    //
-    //        List(article, id: \.self) { item in
-    //            CellView(article: item)
-    //
-    //            }
-    //        }
-}
+    var SavedBookmarksView: some View {
+        ScrollView{
+            ForEach(viewModel.getAllFeaturedFavorites()) { item in
+                let cell = CellView(article: item)
+                let details = DetailsView(article: item)
+                NavigationLink {
+                    details
+                } label: {
+                    cell
+                }
+            }
+        }.padding()
+    }
+}//end of BookmarksView
 
 
 

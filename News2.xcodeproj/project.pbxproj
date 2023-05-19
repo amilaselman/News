@@ -22,14 +22,13 @@
 		FA87AFAA29E75D4D0048B4B1 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87AFA929E75D4D0048B4B1 /* ImageView.swift */; };
 		FA87B01A29E94AEE0048B4B1 /* ArticleDataBase+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87B01829E94AEE0048B4B1 /* ArticleDataBase+CoreDataClass.swift */; };
 		FA87B01B29E94AEE0048B4B1 /* ArticleDataBase+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87B01929E94AEE0048B4B1 /* ArticleDataBase+CoreDataProperties.swift */; };
-		FA87B01F29EB017B0048B4B1 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87B01E29EB017B0048B4B1 /* ArticleListView.swift */; };
-		FA87B02129EB03380048B4B1 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87B02029EB03380048B4B1 /* BookmarkViewModel.swift */; };
 		FA8943AF29ED3B23009358FA /* ArticlesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA8943AD29ED3B23009358FA /* ArticlesDataModel.xcdatamodeld */; };
 		FA8943B129ED3C88009358FA /* ArticleDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8943B029ED3C88009358FA /* ArticleDB.swift */; };
-		FA8943B329ED3E8A009358FA /* ArticleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8943B229ED3E8A009358FA /* ArticleProvider.swift */; };
-		FA8943B529ED46C4009358FA /* ArticleDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8943B429ED46C3009358FA /* ArticleDataViewModel.swift */; };
 		FA8943BB29F14E7A009358FA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8943BA29F14E7A009358FA /* CoreDataManager.swift */; };
 		FA8943BD29F69652009358FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8943BC29F69652009358FA /* AppDelegate.swift */; };
+		FAA3C5CA2A14EC640063F031 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5C92A14EC640063F031 /* ProfileView.swift */; };
+		FAA3C5CC2A14EC950063F031 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */; };
+		FAA3C5CE2A15007C0063F031 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,14 +48,13 @@
 		FA87AFA929E75D4D0048B4B1 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		FA87B01829E94AEE0048B4B1 /* ArticleDataBase+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleDataBase+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA87B01929E94AEE0048B4B1 /* ArticleDataBase+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleDataBase+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FA87B01E29EB017B0048B4B1 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
-		FA87B02029EB03380048B4B1 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		FA8943AE29ED3B23009358FA /* ArticlesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ArticlesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		FA8943B029ED3C88009358FA /* ArticleDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDB.swift; sourceTree = "<group>"; };
-		FA8943B229ED3E8A009358FA /* ArticleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleProvider.swift; sourceTree = "<group>"; };
-		FA8943B429ED46C3009358FA /* ArticleDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataViewModel.swift; sourceTree = "<group>"; };
 		FA8943BA29F14E7A009358FA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FA8943BC29F69652009358FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FAA3C5C92A14EC640063F031 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +71,7 @@
 		FA87AF7829E5D9040048B4B1 = {
 			isa = PBXGroup;
 			children = (
+				FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */,
 				FA87B01829E94AEE0048B4B1 /* ArticleDataBase+CoreDataClass.swift */,
 				FA87B01929E94AEE0048B4B1 /* ArticleDataBase+CoreDataProperties.swift */,
 				FA87AF8329E5D9040048B4B1 /* News2 */,
@@ -92,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				FA8943B029ED3C88009358FA /* ArticleDB.swift */,
-				FA8943B229ED3E8A009358FA /* ArticleProvider.swift */,
 				FA8943BA29F14E7A009358FA /* CoreDataManager.swift */,
 				FA87AF8429E5D9040048B4B1 /* News2App.swift */,
 				FA8943BC29F69652009358FA /* AppDelegate.swift */,
@@ -117,13 +115,14 @@
 		FA87AFA229E629900048B4B1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FA87AF8629E5D9040048B4B1 /* SplashScreen.swift */,
 				FA87AF9C29E616B30048B4B1 /* HomePageView.swift */,
+				FA87AFA029E629850048B4B1 /* DetailsView.swift */,
+				FA87AF9E29E622310048B4B1 /* BookmarksView.swift */,
 				FA87AFA929E75D4D0048B4B1 /* ImageView.swift */,
 				FA87AFA729E6BB890048B4B1 /* CellView.swift */,
-				FA87AF9E29E622310048B4B1 /* BookmarksView.swift */,
-				FA87AFA029E629850048B4B1 /* DetailsView.swift */,
-				FA87B01E29EB017B0048B4B1 /* ArticleListView.swift */,
+				FAA3C5C92A14EC640063F031 /* ProfileView.swift */,
+				FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */,
+				FA87AF8629E5D9040048B4B1 /* SplashScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,8 +132,6 @@
 			children = (
 				FA87AF9A29E5EEAA0048B4B1 /* NewsViewModel.swift */,
 				FA87AF9229E5D9920048B4B1 /* NewsModel.swift */,
-				FA87B02029EB03380048B4B1 /* BookmarkViewModel.swift */,
-				FA8943B429ED46C3009358FA /* ArticleDataViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA87AF8C29E5D9060048B4B1 /* Preview Assets.xcassets in Resources */,
+				FAA3C5CE2A15007C0063F031 /* Launch Screen.storyboard in Resources */,
 				FA87AF8929E5D9060048B4B1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,18 +223,16 @@
 				FA87AF8729E5D9040048B4B1 /* SplashScreen.swift in Sources */,
 				FA87B01A29E94AEE0048B4B1 /* ArticleDataBase+CoreDataClass.swift in Sources */,
 				FA87AFA129E629850048B4B1 /* DetailsView.swift in Sources */,
-				FA8943B329ED3E8A009358FA /* ArticleProvider.swift in Sources */,
 				FA87AF9329E5D9920048B4B1 /* NewsModel.swift in Sources */,
+				FAA3C5CC2A14EC950063F031 /* CategoriesView.swift in Sources */,
 				FA87AF9729E5E3560048B4B1 /* TopHeadlinesManager.swift in Sources */,
 				FA8943BB29F14E7A009358FA /* CoreDataManager.swift in Sources */,
 				FA87AF9F29E622310048B4B1 /* BookmarksView.swift in Sources */,
-				FA87B01F29EB017B0048B4B1 /* ArticleListView.swift in Sources */,
 				FA87AF9B29E5EEAA0048B4B1 /* NewsViewModel.swift in Sources */,
 				FA87AF8529E5D9040048B4B1 /* News2App.swift in Sources */,
-				FA87B02129EB03380048B4B1 /* BookmarkViewModel.swift in Sources */,
 				FA87AFA829E6BB890048B4B1 /* CellView.swift in Sources */,
-				FA8943B529ED46C4009358FA /* ArticleDataViewModel.swift in Sources */,
 				FA87AF9D29E616B30048B4B1 /* HomePageView.swift in Sources */,
+				FAA3C5CA2A14EC640063F031 /* ProfileView.swift in Sources */,
 				FA87AF9929E5E3660048B4B1 /* AllHeadlinesManager.swift in Sources */,
 				FA87AFAA29E75D4D0048B4B1 /* ImageView.swift in Sources */,
 			);
@@ -367,11 +363,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"News2/Preview Content\"";
+				DEVELOPMENT_TEAM = VFPCV7MS7R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -395,11 +393,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"News2/Preview Content\"";
+				DEVELOPMENT_TEAM = VFPCV7MS7R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

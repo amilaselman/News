@@ -9,20 +9,16 @@ import SwiftUI
 import CoreData
 
 struct HomePageView: View {
-    //dataBase model
-    // @Environment(\.managedObjectContext) var moc
-   // @State var coreManager = CoreDataManager()
     
-    //model
     @StateObject var viewModel = NewsViewModel()
     @State var searchText = ""
-    @State var isPressed: Bool = true
+    @State var selection = 2
     @State var viewActive = false
-    let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
+    let backgroundColor = Color(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
         NavigationStack {
             ScrollView{
-            VStack(alignment: .leading){
+                VStack(alignment: .leading){
                     Text("Discover things of this world")
                         .font(.headline)
                         .foregroundColor(.gray)
@@ -35,41 +31,15 @@ struct HomePageView: View {
                     Text("All Articles")
                         .font(.largeTitle)
                         .bold()
-                   AllArticlesView
+                    AllArticlesView
                 }
             }.navigationTitle("Browse")//.navigationBarTitleDisplayMode(.inline)
                 .padding(.all)
-                .background(
-                    NavigationLink("", destination: BookmarksView(), isActive: $viewActive))
-                .toolbar {
-                    
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.bottomBar) {
-                        Button {
-                            //what does it do?
-                        } label: {
-                            Image(systemName: "house.fill")
-                                .foregroundColor(Color(backgroundColor))
-                        }
-                        Spacer()
-                        Image(systemName: "square.split.2x2")
-                            .foregroundColor(.gray)
-                        Spacer()
-                        Button {
-                            viewActive = true
-                        } label: {
-                            Image(systemName: "bookmark")
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        Image(systemName: "person")
-                            .foregroundColor(.gray)
-                    }
-                }
         }.searchable(text: $searchText)
             .onChange(of: searchText) { articleTitle in
                 viewModel.search(text: articleTitle)
             }
-    }
+    }//end of HomePageView
     
     var TopHeadlinesView: some View {
         ScrollView(.horizontal){
