@@ -32,9 +32,6 @@ struct News2App: App {
                             Image (systemName: "bookmark.fill")
                             Text("Bookmarks")
                         }.tag(2)
-                        .onAppear(){
-                            viewModel.getAllFeaturedFavorites()
-                        }
                     ProfileView()
                         .tabItem {
                             Image(systemName: "person.fill")
