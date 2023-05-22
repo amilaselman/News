@@ -52,6 +52,8 @@ struct HomePageView: View {
                     }
                 }
             }
+        }.onAppear{
+            
         }
     }
     

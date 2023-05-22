@@ -24,7 +24,7 @@ struct URLImageBookmarkView: View {
                 .cornerRadius(20.0)
                 .onAppear{
                     fetchData()
-                }
+            }
         }
     }
     private func fetchData() {
@@ -37,7 +37,7 @@ struct URLImageBookmarkView: View {
     }
 }
 struct ImageView: View {
-    @StateObject var viewModel = NewsViewModel()
+    @StateObject var favViewModel = FavoriteViewModel()
     @State var article: ArticleDB
     var bookmarkPressed: Bool = true
     var body: some View {
@@ -46,6 +46,8 @@ struct ImageView: View {
             VStack(alignment: .trailing){
                 Button {
                     article.isFavorite.toggle()
+                    favViewModel.bookmarkTopArticle(article: article)
+                    favViewModel.removeTopArticleFromBookmark(article: article)
                 } label: {
                     checkBookmark
                 }
@@ -64,17 +66,7 @@ struct ImageView: View {
             .bold()
             .padding()
     }
-//    func buttonPressed ()  {
-//        viewModel.bookmarkTopArticle()
-//    }
-    //        func bookmarkedArticle(by url: String) {
-    //            let article = viewModel.getArticle(by: url)
-    //            if let article = article {
-    //                article.isFavorite = true
-    //            } else {
-    //                article?.isFavorite = false
-    //            }
-    //        }
+
     
 }
 //Data(contentsOf: ) do not use with network because it is sync and blocks the main thread, making the app slow down

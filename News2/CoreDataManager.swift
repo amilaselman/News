@@ -27,27 +27,13 @@ final class CoreDataManager: NSObject {
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }()
-//    lazy var mainMOC2: NSManagedObjectContext = {
-//        let managedObjectContext = persistentContainer.viewContext
-//        managedObjectContext.automaticallyMergesChangesFromParent = true
-//        managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-//        managedObjectContext.undoManager = nil
-//        return managedObjectContext
-//    }()
-    //
+
     var writeMOC: NSManagedObjectContext {
         let backgroundMOC = persistentContainer.newBackgroundContext()
         backgroundMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         backgroundMOC.undoManager = nil
         return backgroundMOC
     }
-   // make one more backgroundContext    ???
-//    var writeMOC2: NSManagedObjectContext {
-//        let backgroundMOC = persistentContainer.newBackgroundContext()
-//        backgroundMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-//        backgroundMOC.undoManager = nil
-//        return backgroundMOC
-//    }
     
     func loadStores(completion:(() -> Void)? = nil) {
         guard storeIsNotLoad else {

@@ -10,13 +10,14 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class TopHeadlinesManager  {
+
+
+
+class TopHeadlinesManager {
     private let coreManager = CoreDataManager.shared
-    
-    //my function
     func getData(completionHandler: @escaping (Bool) -> ()) {
         let urlString = "https://newsapi.org/v2/top-headlines?country=us&apiKey=9044fe8605c447b587a2adc404452dd5#"
-        guard let url = URL(string: urlString) else { return } // check za kasnije
+        guard let url = URL(string: urlString) else { return} // check za kasnije
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let recievedData = data {
                 do {
@@ -31,13 +32,11 @@ class TopHeadlinesManager  {
         }.resume()
     }
     
-    
     func completeAdding(articles: [Article], completionHandler: @escaping(Bool) -> ()) {
         let context = self.coreManager.writeMOC
-        context.perform {
+        context.perform {//perform makes sure this process happens on the main thread
             for item in articles {
                 self.insertItem(article: item, context: context)
-                self.updateFavorite(article: item)
             }
             if context.hasChanges {
                 do {
@@ -52,73 +51,12 @@ class TopHeadlinesManager  {
             }
         }
     }
-    
-    func findOrCreate(url: String, context: NSManagedObjectContext) -> ArticleDB {
-        let article = fetchByUrl(by: url)// pozvati fju sa predicate za url
-        if let article = article { //unwrappanje
-            return article
-        } else {
-            let newArticle = ArticleDB(context: context)
-            return newArticle
-        }
-    }
-//    func updateFavorite(article: Article) {
-//        let context = coreManager.writeMOC
-//        context.perform {
-//            let favorite = self.findFavorite()
-//            favorite?.authorDB = article.author
-//            favorite?.titleDB = article.title
-//        }
-//        if context.hasChanges {
-//            do {
-//                try? context.save()
-//            } catch let error {
-//                print("Unable to save context of favorite : \(error)")
-//            }
-//        }
-//    }
-    
-//    func findFavorite() -> ArticleDB? {
-//        let favorite = fetchFavorites()
-//        return favorite.first
-//
-//    }
-    func findFavorite() -> ArticleDB? {
-        let favorites = fetchFavorites()
-        for article in favorites {
-            return article
-        }
-        return favorites.first
-    }
-
-    //calls  findFavorite() and updates it
-    func updateFavorite(article: Article) {
-        let context = coreManager.writeMOC
-        context.perform {
-            let favorite = self.findFavorite()
-            favorite?.authorDB = article.author
-            favorite?.titleDB = article.title
-            favorite?.urlDB = article.url.absoluteString
-            favorite?.publishedAtDB = article.publishedAt
-            favorite?.urlToImageDB = article.urlToImage?.absoluteString
-            favorite?.contentDB = article.content
-            favorite?.idSourceDB = article.source.id
-            favorite?.nameSourceDB = article.source.name
-            favorite?.descriptionDB = article.description
-        }
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error {
-                print("Unable to save context: \(error)")
-            }
-        }
-        
-    }
+    //some issues while inserting core data ?
+    //that cause the error: mutated while being enumerated
     func insertItem(article: Article, context: NSManagedObjectContext) {
-        //check da li ima vec u bazi article sa istim url kao iz apija ???  da je ArticleDB.urlDB == Article.url
         let item = findOrCreate(url: article.url.absoluteString, context: context)
-        //ako ga nadje, treba ga update-ovat
+        //if found, update it
+        item.isTop = true
         item.authorDB = article.author
         item.titleDB = article.title
         item.idSourceDB = article.source.id
@@ -128,70 +66,87 @@ class TopHeadlinesManager  {
         item.publishedAtDB = article.publishedAt
         item.urlDB = article.url.absoluteString
         item.urlToImageDB = article.urlToImage?.absoluteString
-        
     }
-    
-//fetches all headlines from dataBase, but from which api?
-    //fetchAllHeadlines() does the same, uses the same MOC,
-    //
-    func fetchHeadlines() -> [ArticleDB] {
-        let context = coreManager.mainMOC
+    func findOrCreate(url: String, context: NSManagedObjectContext) -> ArticleDB {
+        let article = fetchByUrl(by: url,context: context)// use predicate by: url
+        if let article = article { //unwrapping
+            article.isTop = true
+            return article
+        } else {
+            let newArticle = ArticleDB(context: context)
+            newArticle.isTop = true
+            return newArticle
+        }
+    }
+//    calls  addBookmark() and updates it
+//    but where to call this function?
+    func updateFavorite(article: ArticleDB, context: NSManagedObjectContext) {
+        let favorites = fetchFavorites(context: context)
+        for fav in favorites {
+            fav.isTop = true
+            fav.authorDB = article.authorDB
+            fav.titleDB = article.titleDB
+            fav.urlDB = article.urlDB
+            fav.publishedAtDB = article.publishedAtDB
+            fav.urlToImageDB = article.urlToImageDB
+            fav.contentDB = article.contentDB
+            fav.idSourceDB = article.idSourceDB
+            fav.nameSourceDB = article.nameSourceDB
+            fav.descriptionDB = article.descriptionDB
+        }
+    }
+   
+    //fetches all headlines from dataBase, but from which api?
+    func fetchTopHeadlines() -> [ArticleDB] {
+        let context = self.coreManager.mainMOC
         let request = ArticleDB.articleFetchRequest
+        request.predicate = NSPredicate(format: "%K == true", #keyPath(ArticleDB.isTop))
+        request.fetchLimit = 10
         return (try? context.fetch(request)) ?? []
     }
-//fetches headlines by url; used as id because it's unique
-    func fetchByUrl(by url: String) -> ArticleDB? {
-        let context = coreManager.mainMOC
+    //fetches headlines by url from database, url is used as an id because it is unique
+    //error while fetching, but  why?
+    func fetchByUrl(by url: String, context: NSManagedObjectContext) -> ArticleDB? {
         let request = ArticleDB.articleFetchRequest
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(ArticleDB.urlDB), url)
+        request.fetchLimit = 10
         return try? context.fetch(request).first
     }
-//fetches headlines marked as isFavorite = true
-    func fetchFavorites() -> [ArticleDB] {
-        let context = coreManager.mainMOC
+    //fetches headlines from database that are marked as favorite; function used in ViewModel
+    func fetchFavorites(context: NSManagedObjectContext) -> [ArticleDB] {
         let request = ArticleDB.articleFetchRequest
         request.predicate = NSPredicate(format: "%K == true", #keyPath(ArticleDB.isFavorite))
         return (try? context.fetch(request)) ?? []
     }
     
-    func findAndUpdate() -> ArticleDB {
-        let context = self.coreManager.writeMOC
-        let newFavorites = fetchFavorites()
-        //update the rest of the atributes for newFavorite
-        for item in newFavorites {
-            item.isFavorite = true
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch let error {
-                    print("Unable to save context: \(error)")
-                }
+    //creates a new instance of database type and sets the atribute isFavorite to true
+    //used in ViewModel
+    //must find the article that isFavorite == true in database
+    func addTopBookmark(article: ArticleDB, context: NSManagedObjectContext) -> ArticleDB {
+        article.isFavorite = true
+        updateFavorite(article: article, context: context)
+                if context.hasChanges {
+                    do {
+                        try context.save()
+                    } catch let error {
+                        print("Unable to save context : \(error)")
+                    }
+        }
+        return article
+    }
+    
+    func removeBookmark(article: ArticleDB, context: NSManagedObjectContext){
+        article.isFavorite = false
+        updateFavorite(article: article, context: context)
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch let error {
+                print("Unable to save context: \(error)")
             }
         }
-        return newFavorites.first!
-
     }
-//    func findAndUpdate() -> ArticleDB? {
-//        let context = self.coreManager.writeMOC
-//      //  let newFavorite = fetchFavorites()
-//        let favorite = self.findFavorite()
-//        context.perform {
-//            favorite?.isFavorite = true
-//                }
-//                if context.hasChanges{
-//                    do {
-//                        try context.save()
-//                    } catch let error {
-//                        print("Unable to save context : \(error)")
-//                    }
-//                }
-//        return favorite
-//    }
 
-    
-    
-    
-   
 }//end of class
 
 

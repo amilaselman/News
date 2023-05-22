@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     @StateObject var viewModel = NewsViewModel()
+    @StateObject var favViewModel = FavoriteViewModel()
     @State var article : ArticleDB
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
@@ -26,18 +27,18 @@ struct DetailsView: View {
                         }
                         Button {
                             article.isFavorite.toggle()
-                            viewModel.bookmarkArticle(article: article)
+                            favViewModel.bookmarkArticle(article: article)
                         } label:{
                             Image(systemName: article.isFavorite ? "bookmark.fill" : "bookmark")
                                 .foregroundColor(.gray)
-                        }
                     }
                 }
+            }
         }
     }
     var viewContent: some View {
         ScrollView{
-            VStack(alignment: .leading) {
+            VStack() {
                 Image(systemName: "photo").data(url: article.urlToImage ?? URL(fileURLWithPath: ""))
                     .resizable()
                     .scaledToFill()
@@ -68,20 +69,10 @@ struct DetailsView: View {
                             .foregroundColor(Color(fontColor))
                             .font(.system(size: 20))
                             .multilineTextAlignment(.leading)
+                            .padding(10)
                     }
                 }
             }
-        }.padding(.all)
+        }
     }
-    
-
-//    func bookmarkedArticle(by url: String) {
-//        let article = viewModel.getArticle(by: url)
-//        if let article = article {
-//            article.isFavorite = true
-//        } else {
-//            article?.isFavorite = false
-//        }
-//    }
-    
 }

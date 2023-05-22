@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BookmarksView: View {
-    @StateObject var viewModel = NewsViewModel()
+    @StateObject var favViewModel = FavoriteViewModel()
     @State var viewActive = false
     let backgroundColor = CGColor(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
     var body: some View {
@@ -22,7 +22,7 @@ struct BookmarksView: View {
                         Spacer()
                     }.padding(.leading)
                     Spacer()
-                    if viewModel.bookmarks == [] {
+                    if favViewModel.bookmarks == [] {
                         NoSavedBookmarksView
                             .padding(.maximum(100.0, 10.0))
                     } else {
@@ -30,6 +30,12 @@ struct BookmarksView: View {
                     }
                 }.navigationTitle("Bookmarks")
             }
+        }
+        .onAppear(){
+            print("on appear")
+            print(favViewModel.bookmarks.count)
+            favViewModel.bookmarks = favViewModel.getAllFeaturedFavorites()
+            print(favViewModel.bookmarks.count)
         }// end of navView
     }//end of body var
     
@@ -49,7 +55,7 @@ struct BookmarksView: View {
     
     var SavedBookmarksView: some View {
         ScrollView{
-            ForEach(viewModel.getAllFeaturedFavorites()) { item in
+            ForEach(favViewModel.bookmarks) { item in
                 let cell = CellView(article: item)
                 let details = DetailsView(article: item)
                 NavigationLink {

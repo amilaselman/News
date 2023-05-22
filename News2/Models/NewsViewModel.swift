@@ -11,8 +11,6 @@ import SwiftUI
      //managed variables for storing data, searching data
     @Published var articles: [ArticleDB] = []
     @Published var topArticles: [ArticleDB] = []
-    @Published var bookmarks: [ArticleDB] = []
-    @Published var bookmark = ArticleDB()
     var allArticles = [ArticleDB]()
     @Published var searchArticles: [ArticleDB] = []
      //references
@@ -20,27 +18,24 @@ import SwiftUI
     var allHeadlinesManager : AllHeadlinesManager
     var topHeadlinesManager : TopHeadlinesManager
     
-    
      init( topHeadlinesManager: TopHeadlinesManager = TopHeadlinesManager(), allHeadlinesManager: AllHeadlinesManager = AllHeadlinesManager()) {
         self.topHeadlinesManager = topHeadlinesManager
         self.allHeadlinesManager = allHeadlinesManager
-
-         //isuess when pulling data from network for the first time, pulls at the same time? too fast so it chrashes
-        //getTopHeadlines()
+         //isuess when pulling data from network for the first time,
+         //pulls at the same time? too fast so it chrashes
+         //pulls the same articles instead of different ones
+         //probably pulls articles from api every time the app is deleted and built, so core data is deleted as well?
+        getTopHeadlines()
         getAllHeadlines()
-         //getAllHeadlinesTest()
-         
     }
-    
-     func getTopHeadlines() {
+    func getTopHeadlines() {
          topHeadlinesManager.getData { [weak self] success in
              guard let self else { return }
              DispatchQueue.main.async {
-                 self.topArticles = self.topHeadlinesManager.fetchHeadlines()
+                 self.topArticles = self.topHeadlinesManager.fetchTopHeadlines()
              }
          }
      }
-     
     func getAllHeadlines() {
         allHeadlinesManager.getData { [weak self] success in
             guard let self else {return}
@@ -51,27 +46,11 @@ import SwiftUI
             }
         }
     }
-
      func getArticle(by url: String) -> ArticleDB? {
          topArticles.first(where:  { $0.urlDB == url })
      }
-//to make a list of bookmarks in the BookmarksView
-     func getAllFeaturedFavorites() -> [ArticleDB] {
-         return allHeadlinesManager.fetchFavorites(context: provider.writeMOC)
-     }
 
-    
-//called in BookmarksView
-     func bookmarkArticle(article: ArticleDB) {
-         bookmark = allHeadlinesManager.addBookmark(article: article, context: provider.writeMOC)
-         bookmarks.append(bookmark)
-     }
-//called in ImageView
-//     func bookmarkTopArticle() {
-//         bookmark = topHeadlinesManager.findAndUpdate() ?? ArticleDB()
-//     }
-   
-//functionality works fine, no issues
+//functionality works fine
     func search(text: String)  {
         if text.isEmpty {
             searchArticles = allArticles

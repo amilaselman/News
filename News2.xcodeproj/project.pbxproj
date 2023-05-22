@@ -29,6 +29,7 @@
 		FAA3C5CA2A14EC640063F031 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5C92A14EC640063F031 /* ProfileView.swift */; };
 		FAA3C5CC2A14EC950063F031 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */; };
 		FAA3C5CE2A15007C0063F031 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */; };
+		FAC413502A1B80AD00B5396B /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC4134F2A1B80AD00B5396B /* FavoriteViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		FAA3C5C92A14EC640063F031 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		FAC4134F2A1B80AD00B5396B /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				FA87AF9A29E5EEAA0048B4B1 /* NewsViewModel.swift */,
+				FAC4134F2A1B80AD00B5396B /* FavoriteViewModel.swift */,
 				FA87AF9229E5D9920048B4B1 /* NewsModel.swift */,
 			);
 			path = Models;
@@ -234,6 +237,7 @@
 				FA87AF9D29E616B30048B4B1 /* HomePageView.swift in Sources */,
 				FAA3C5CA2A14EC640063F031 /* ProfileView.swift in Sources */,
 				FA87AF9929E5E3660048B4B1 /* AllHeadlinesManager.swift in Sources */,
+				FAC413502A1B80AD00B5396B /* FavoriteViewModel.swift in Sources */,
 				FA87AFAA29E75D4D0048B4B1 /* ImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
