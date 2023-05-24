@@ -29,6 +29,7 @@
 		FAA3C5CA2A14EC640063F031 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5C92A14EC640063F031 /* ProfileView.swift */; };
 		FAA3C5CC2A14EC950063F031 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */; };
 		FAA3C5CE2A15007C0063F031 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */; };
+		FAA688AB2A1CEE39003F279B /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA688AA2A1CEE39003F279B /* URLManager.swift */; };
 		FAC413502A1B80AD00B5396B /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC4134F2A1B80AD00B5396B /* FavoriteViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		FAA3C5C92A14EC640063F031 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FAA3C5CB2A14EC950063F031 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		FAA3C5CD2A15007C0063F031 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		FAA688AA2A1CEE39003F279B /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		FAC4134F2A1B80AD00B5396B /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 			children = (
 				FA87AF9829E5E3660048B4B1 /* AllHeadlinesManager.swift */,
 				FA87AF9629E5E3560048B4B1 /* TopHeadlinesManager.swift */,
+				FAA688AA2A1CEE39003F279B /* URLManager.swift */,
 			);
 			path = ModelManagers;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				FA87AF9929E5E3660048B4B1 /* AllHeadlinesManager.swift in Sources */,
 				FAC413502A1B80AD00B5396B /* FavoriteViewModel.swift in Sources */,
 				FA87AFAA29E75D4D0048B4B1 /* ImageView.swift in Sources */,
+				FAA688AB2A1CEE39003F279B /* URLManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

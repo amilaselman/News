@@ -4,14 +4,18 @@
         <attribute name="authorDB" optional="YES" attributeType="String"/>
         <attribute name="contentDB" optional="YES" attributeType="String"/>
         <attribute name="descriptionDB" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="idSourceDB" optional="YES" attributeType="String"/>
         <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="isTop" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isTop" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="nameSourceDB" optional="YES" attributeType="String"/>
         <attribute name="publishedAtDB" optional="YES" attributeType="String"/>
         <attribute name="titleDB" optional="YES" attributeType="String"/>
         <attribute name="urlDB" optional="YES" attributeType="String"/>
         <attribute name="urlToImageDB" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="urlDB"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
 </model>

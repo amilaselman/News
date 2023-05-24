@@ -7,35 +7,31 @@
 
 import Foundation
 import SwiftUI
- class NewsViewModel: ObservableObject {
-     //managed variables for storing data, searching data
+class NewsViewModel: ObservableObject {
+    //managed variables for storing data, searching data
     @Published var articles: [ArticleDB] = []
     @Published var topArticles: [ArticleDB] = []
     var allArticles = [ArticleDB]()
     @Published var searchArticles: [ArticleDB] = []
-     //references
+    //references
     var provider = CoreDataManager.shared
     var allHeadlinesManager : AllHeadlinesManager
     var topHeadlinesManager : TopHeadlinesManager
     
-     init( topHeadlinesManager: TopHeadlinesManager = TopHeadlinesManager(), allHeadlinesManager: AllHeadlinesManager = AllHeadlinesManager()) {
+    init( topHeadlinesManager: TopHeadlinesManager = TopHeadlinesManager(), allHeadlinesManager: AllHeadlinesManager = AllHeadlinesManager()) {
         self.topHeadlinesManager = topHeadlinesManager
         self.allHeadlinesManager = allHeadlinesManager
-         //isuess when pulling data from network for the first time,
-         //pulls at the same time? too fast so it chrashes
-         //pulls the same articles instead of different ones
-         //probably pulls articles from api every time the app is deleted and built, so core data is deleted as well?
         getTopHeadlines()
         getAllHeadlines()
     }
     func getTopHeadlines() {
-         topHeadlinesManager.getData { [weak self] success in
-             guard let self else { return }
-             DispatchQueue.main.async {
-                 self.topArticles = self.topHeadlinesManager.fetchTopHeadlines()
-             }
-         }
-     }
+        topHeadlinesManager.getData { [weak self] success in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                self.topArticles = self.topHeadlinesManager.fetchTopHeadlines()
+            }
+        }
+    }
     func getAllHeadlines() {
         allHeadlinesManager.getData { [weak self] success in
             guard let self else {return}
@@ -46,11 +42,16 @@ import SwiftUI
             }
         }
     }
-     func getArticle(by url: String) -> ArticleDB? {
-         topArticles.first(where:  { $0.urlDB == url })
-     }
-
-//functionality works fine
+    func onAppearAllHeadlines() {
+        allArticles  = allHeadlines()
+    }
+    func allHeadlines() -> [ArticleDB] {
+       return allHeadlinesManager.fetchAllHeadlines()
+    }
+    func getArticle(by url: String) -> ArticleDB? {
+        topArticles.first(where:  { $0.urlDB == url })
+    }
+    //functionality works fine
     func search(text: String)  {
         if text.isEmpty {
             searchArticles = allArticles

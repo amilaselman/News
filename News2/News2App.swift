@@ -15,7 +15,6 @@ struct News2App: App {
     @State var tabSelected = 0
     var body: some Scene {
         WindowGroup {
-            let backgroundColor = Color(#colorLiteral(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 0.9486688273))
                 TabView(selection: $tabSelected) {
                     HomePageView()
                         .tabItem {
@@ -38,7 +37,7 @@ struct News2App: App {
                             Text("Profile")
                         }.tag(3)
                 }
-                .accentColor(backgroundColor)
+               
                 
             
             //just for testing

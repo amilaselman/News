@@ -19,7 +19,6 @@ final class CoreDataManager: NSObject {
         let container = NSPersistentContainer(name: modelFileName)
         return container
     }()
-    //
     lazy var mainMOC: NSManagedObjectContext = {
         let managedObjectContext = persistentContainer.viewContext
         managedObjectContext.automaticallyMergesChangesFromParent = true
@@ -27,14 +26,12 @@ final class CoreDataManager: NSObject {
         managedObjectContext.undoManager = nil
         return managedObjectContext
     }()
-
     var writeMOC: NSManagedObjectContext {
         let backgroundMOC = persistentContainer.newBackgroundContext()
         backgroundMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         backgroundMOC.undoManager = nil
         return backgroundMOC
     }
-    
     func loadStores(completion:(() -> Void)? = nil) {
         guard storeIsNotLoad else {
             completion?()
@@ -55,3 +52,15 @@ final class CoreDataManager: NSObject {
     }
 }
 
+extension NSManagedObjectContext {
+    func saveContext(completionHandler: @escaping (Bool) -> ()) {
+        guard hasChanges else { return }
+        do {
+           try save()
+            completionHandler(true)
+        }catch let error {
+            print("Unable to save context with error \(error)")
+            completionHandler(false)
+        }
+    }
+}

@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct HomePageView: View {
-    
+    @StateObject var favViewModel = FavoriteViewModel()
     @StateObject var viewModel = NewsViewModel()
     @State var searchText = ""
     @State var selection = 2
@@ -52,8 +52,8 @@ struct HomePageView: View {
                     }
                 }
             }
-        }.onAppear{
-            
+        }.onAppear {
+            favViewModel.onAppearBookmarks()
         }
     }
     

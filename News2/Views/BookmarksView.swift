@@ -32,9 +32,8 @@ struct BookmarksView: View {
             }
         }
         .onAppear(){
-            print("on appear")
-            print(favViewModel.bookmarks.count)
-            favViewModel.bookmarks = favViewModel.getAllFeaturedFavorites()
+            print("on appear called on BookmarksView")
+            favViewModel.onAppearBookmarks()
             print(favViewModel.bookmarks.count)
         }// end of navView
     }//end of body var
@@ -47,8 +46,8 @@ struct BookmarksView: View {
                 Image(systemName: "book.closed")
                     .foregroundColor(Color(backgroundColor))
             }
-            Text("You haven't saved any articles yet. \n Start reading and bookmarking them now.")
-                .lineLimit(4)
+            Text("You haven't saved any articles yet.\n Start reading and bookmarking them now.")
+                .lineLimit(5)
                 .multilineTextAlignment(.center)
         }
     }

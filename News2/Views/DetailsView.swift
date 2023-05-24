@@ -26,7 +26,6 @@ struct DetailsView: View {
                                 .foregroundColor(.gray)
                         }
                         Button {
-                            article.isFavorite.toggle()
                             favViewModel.bookmarkArticle(article: article)
                         } label:{
                             Image(systemName: article.isFavorite ? "bookmark.fill" : "bookmark")
@@ -34,12 +33,15 @@ struct DetailsView: View {
                     }
                 }
             }
+        }.onAppear(){
+            favViewModel.onAppearBookmarks()
         }
     }
     var viewContent: some View {
         ScrollView{
-            VStack() {
-                Image(systemName: "photo").data(url: article.urlToImage ?? URL(fileURLWithPath: ""))
+            VStack(alignment: .leading) {
+                Image(systemName: "photo")
+                    .imageFromUrl(url: article.urlToImage ?? URL(fileURLWithPath: ""))
                     .resizable()
                     .scaledToFill()
                     .frame(width: 350.0, height: 150.0)
@@ -76,3 +78,31 @@ struct DetailsView: View {
         }
     }
 }
+
+extension Image {
+//    func data(url: URL) -> Self {
+//           guard let data = try? Data(contentsOf: url),
+//                 let uiImage = UIImage(data: data)
+//           else {
+//               return self
+//                   .resizable()
+//           }
+//           return Image(uiImage: uiImage)
+//               .resizable()
+//       }
+    
+
+    func imageFromUrl(url: URL) -> Self {
+        let urlRequest = URLRequest(url: url)
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data, let uiImage = UIImage(data: data) else {return}
+                return uiImage
+            }
+        }.resume()
+    }
+}
+
+
+
+
